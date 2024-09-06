@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Order History | Track</title>
+        <link type="text/css" rel="stylesheet" href="dashboard.css">
+        <link rel="shortcut icon" href="tracklogo2.jpg" type="image/icon">
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@900&display=swap" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css2?family=Poppins&family=Roboto:wght@900&display=swap" rel="stylesheet">
+    </head>
+    <body>
+        <div class="sidenav">
+            <!--<img src="tracklogo2.jpg" alt="company logo">-->
+            <h1 style="color:white;padding:0px 0px 30px 0px">Track</h1>
+            <a href="dashboard.html">Dashboard</a>
+            <a href="products.html">Product List</a>
+            <a href="customers.html">Customer Information</a>
+            <a class="active" href="orders.html">Order History</a>
+            <a href="invoices.html">Invoice</a>
+            <a style="position: absolute; left:55px; bottom: 20px" href="profile.html"><u>Edit Profile</u></a>
+        </div>
+
+        <!--internal css-->
+        <style>
+            form{
+                width: 30%;
+                margin: 0% 0% 0% 40%;
+                padding: 0px;
+                background-color: #eee;
+                border: none;
+            }
+
+            .form-element{
+                margin: 10px 0px 10px 0px;
+                align-self: center;
+            }
+
+            .form-element label{
+                display: block;
+                text-align: left;
+                margin: 3px;
+                font-family: 'Poppins', sans-serif;
+            }
+
+            .form-element input{
+                height: 30px;
+                width: 90%;
+                padding: 5px 10px;
+                font-size: 16px;
+                border-radius: 5px;
+                border: 1px solid gray;
+            }
+
+            .container{
+                padding-left: 10%;
+            }
+
+            .button{
+                width: 30%;
+                padding: 10px;
+                font-size: 15px;
+                color: white;
+                background: #303030;
+                border: none;
+                border-radius: 5px 5px 5px 5px;
+                margin: 0px 0px 0px 35%;
+                font-family: 'Poppins', sans-serif;
+                align-self: center;
+            }
+
+            .pro_info {
+                font-family: "poppins", sans-serif;
+                border-collapse: collapse;
+                width: 88%;
+                float: right;
+            }
+
+            .pro_info td, .pro_info th {
+                border: 1px solid #ddd;
+                padding: 8px;
+                text-align: center;
+            }
+
+            .pro_info tr:nth-child(even){background-color: #f2f2f2;}
+
+            .pro_info tr:hover {background-color: #ddd;}
+
+            .pro_info th {
+                padding-top: 12px;
+                padding-bottom: 12px;
+                text-align: center;
+                background-color: #303030;
+                color: white;
+            }
+        </style>
+
+        <!--Order database showcasing-->
+        <h1 style="padding-left: 50%;">Order History</h1>
+        <form action="" method="GET">
+            <div class="container">
+                <select name="sorting" class="form">
+                    <option value="">Select Option</option>
+                    <option value="pending" <?php if(isset($_GET['sorting']) && $_GET['sorting'] == "a-z")?>>Pending</option>
+                    <option value="completed" <?php if(isset($_GET['sorting']) && $_GET['sorting'] == "z-a")?>>Completed</option>
+                </select>
+            <button type="submit" class="button">Sort</button>
+            </div>
+        </form><br><br>
+
+        <div class="table-design">
+            <table class="pro_info">
+                <thead>
+                <tr>
+                    <th>Order ID</th>
+                    <th>Order status</th>
+                    <th>Items</th>
+                    <th>Date</th>
+                    <th>Discount</th>
+                    <th>Total Price</th>
+                    <th>Payment ID</th>
+                    <th>Customer ID</th>
+                </tr>
+                </thead>
+                <tbody>
+                    <?php
+                        $db = mysqli_connect("localhost", "root", "", "traack");
+
+                        $sort_option = "";
+                        $sort_var = "";
+                        if(isset($_GET['sorting']))
+                        {
+                            if($_GET['sorting'] == "pending"){
+                                $sort_option = "DESC";
+                                $sort_var = "order_status";
+                            } elseif($_GET['sorting'] == "completed"){
+                                $sort_option = "ASC";
+                                $sort_var = "order_status";
+                            }
+                        }
+                        $query = "SELECT * FROM order_details ORDER BY $sort_var $sort_option";
+                        $result = mysqli_query($db, $query);
+
+                        if(mysqli_num_rows($result) > 0){
+                            foreach($result as $row)
+                            {
+                                ?>
+                                <tr>
+                                    <td><?= $row['order_id']; ?></td>
+                                    <td><?= $row['order_status']; ?></td>
+                                    <td><?= $row['items']; ?></td>
+                                    <td><?= $row['date']; ?></td>
+                                    <td><?= $row['discount']; ?></td>
+                                    <td><?= $row['total_price']; ?></td>
+                                    <td><?= $row['payment_id']; ?></td>
+                                    <td><?= $row['customer_id']; ?></td>
+                                </tr>
+                                <?php
+                            }
+                        }else{
+                            ?>
+                                <tr>
+                                    <td colspan="8">No record found</td>
+                                </tr>
+                            <?php
+
+                        }
+                    ?>
+                </tbody>
+            </table>
+        </div>
+    </body>
+</html>

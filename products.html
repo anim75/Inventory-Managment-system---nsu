@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Product Details | Track</title>
+        <link type="text/css" rel="stylesheet" href="dashboard.css">
+        <link rel="shortcut icon" href="tracklogo2.jpg" type="image/icon">
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@900&display=swap" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css2?family=Poppins&family=Roboto:wght@900&display=swap" rel="stylesheet">
+        <!--<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">-->
+    </head>
+
+    <!--body elements-->
+    <body>
+        <!--Sidenav-->
+        <div class="sidenav">
+            <h1 style="color:white;padding:0px 0px 30px 0px">Track</h1>
+            <a href="dashboard.html">Dashboard</a>
+            <a class="active" href="products.html">Product List</a>
+            <a href="customers.html">Customer Information</a>
+            <a href="orders.html">Order History</a>
+            <a href="invoices.html">Invoice</a>
+            <a style="position: absolute; left:55px; bottom: 20px" href="profile.html"><u>Edit Profile</u></a>
+        </div>
+
+        <!--Product adding table-->
+        <h1 style="padding-left: 50%;">Product Add</h1>
+        <!--product add form-->
+        <!--internal css-->
+        <style>
+            form{
+                width: 30%;
+                margin: 0% 0% 0% 40%;
+                padding: 0px;
+                background-color: #eee;
+                border: none;
+            }
+
+            .form-element{
+                margin: 10px 0px 10px 0px;
+                align-self: center;
+            }
+
+            .form-element label{
+                display: block;
+                text-align: left;
+                margin: 3px;
+                font-family: 'Poppins', sans-serif;
+            }
+
+            .form-element input{
+                height: 30px;
+                width: 90%;
+                padding: 5px 10px;
+                font-size: 16px;
+                border-radius: 5px;
+                border: 1px solid gray;
+            }
+
+            .container{
+                padding-left: 10%;
+            }
+
+            .button{
+                width: 30%;
+                padding: 10px;
+                font-size: 15px;
+                color: white;
+                background: #303030;
+                border: none;
+                border-radius: 5px 5px 5px 5px;
+                margin: 0px 0px 0px 35%;
+                font-family: 'Poppins', sans-serif;
+                align-self: center;
+            }
+
+            .pro_info {
+                font-family: "poppins", sans-serif;
+                border-collapse: collapse;
+                width: 88%;
+                float: right;
+            }
+
+            .pro_info td, .pro_info th {
+                border: 1px solid #ddd;
+                padding: 8px;
+                text-align: center;
+            }
+
+            .pro_info tr:nth-child(even){background-color: #f2f2f2;}
+
+            .pro_info tr:hover {background-color: #ddd;}
+
+            .pro_info th {
+                padding-top: 12px;
+                padding-bottom: 12px;
+                text-align: center;
+                background-color: #303030;
+                color: white;
+            }
+        </style>
+        <form action="productadd.php" method="post">
+            <fieldset>
+            <div class="form-element">
+                <label>Code</label>
+                <input type="text" id="pro_code" name="pro_code"><br>
+            </div>
+            <div class="form-element">
+                <label>Name</label>
+                <input type="text" id="pro_name" name="pro_name"><br>
+            </div>
+            <div class="form-element">
+                <label>Description</label>
+                <input type="text" id="pro_desc" name="pro_desc"><br>
+            </div>
+            <div class="form-element">
+                <label>Quantity</label>
+                <input type="text" id="pro_quan" name="pro_quan"><br>
+            </div>
+            <div class="form-element">
+                <label>Price Per Unit</label>
+                <input type="text" id="pro_ppu" name="pro_ppu"><br>
+            </div>
+            <div class="form-element">
+                <label>Manufacturer ID</label>
+                <input type="text" id="manu_id" name="manu_id"><br>
+            </div>
+            <div class="form-element">
+                <label>Category ID</label>
+                <input type="text" id="cat_id" name="cat_id"><br>
+            </div>
+            <div class="form-element">
+                <label>Supplier ID</label>
+                <input type="text" id="sup_id" name="sup_id"><br>
+            </div>
+            <input type="submit" class="button" name="button" value="Add"><br>
+            </fieldset>
+          </form>
+          <br><br>
+
+        <!--Product database showcasing-->
+        <h1 style="padding-left: 48%;">Product Information</h1>
+        <form action="" method="GET">
+            <div class="container">
+                <select name="sorting" class="form">
+                    <option value="">Select Option</option>
+                    <option value="a-z" <?php if(isset($_GET['sorting']) && $_GET['sorting'] == "a-z")?>>Name(a-z)</option>
+                    <option value="z-a" <?php if(isset($_GET['sorting']) && $_GET['sorting'] == "z-a")?>>Name(z-a)</option>
+                    <option value="low-high" <?php if(isset($_GET['sorting']) && $_GET['sorting'] == "low-high")?>>Price(low>high)</option>
+                    <option value="high-low" <?php if(isset($_GET['sorting']) && $_GET['sorting'] == "high-low")?>>Price(high>low)</option>
+                    <option value="less-more" <?php if(isset($_GET['sorting']) && $_GET['sorting'] == "less-more")?>>Quantity(less>more)</option>
+                    <option value="more-less" <?php if(isset($_GET['sorting']) && $_GET['sorting'] == "more-less")?>>Quantity(more>less)</option>
+                </select>
+            <button type="submit" class="button">Sort</button>
+            </div>
+        </form><br><br>
+
+        <div class="table-design">
+            <table class="pro_info">
+                <thead>
+                <tr>
+                    <th>Product Code</th>
+                    <th>Product Name</th>
+                    <th>Product Description</th>
+                    <th>Quantity</th>
+                    <th>Price</th>
+                    <th>Manufacturer ID</th>
+                    <th>Category ID</th>
+                    <th>Supplier ID</th>
+                </tr>
+                </thead>
+                <tbody>
+                    <?php
+                        $db = mysqli_connect("localhost", "root", "", "traack");
+
+                        $sort_option = "";
+                        $sort_var = "";
+                        if(isset($_GET['sorting']))
+                        {
+                            if($_GET['sorting'] == "a-z"){
+                                $sort_option = "ASC";
+                                $sort_var = "product_name"; 
+                            } elseif($_GET['sorting'] == "z-a"){
+                                $sort_option = "DESC";
+                                $sort_var = "product_name";
+                            } elseif($_GET['sorting'] == "low-high"){
+                                $sort_option = "ASC";
+                                $sort_var = "price_per_unit";
+                            } elseif($_GET['sorting'] == "high-low"){
+                                $sort_option = "DESC";
+                                $sort_var = "price_per_unit";
+                            }elseif($_GET['sorting'] == "less-more"){
+                                $sort_option = "ASC";
+                                $sort_var = "quantity";
+                            } elseif($_GET['sorting'] == "more-less"){
+                                $sort_option = "DESC";
+                                $sort_var = "quantity";
+                            }
+                        }
+                        $query = "SELECT * FROM product_information ORDER BY $sort_var $sort_option";
+                        $result = mysqli_query($db, $query);
+
+                        if(mysqli_num_rows($result) > 0){
+                            foreach($result as $row)
+                            {
+                                ?>
+                                <tr>
+                                    <td><?= $row['product_code']; ?></td>
+                                    <td><?= $row['product_name']; ?></td>
+                                    <td><?= $row['product_desc']; ?></td>
+                                    <td><?= $row['quantity']; ?></td>
+                                    <td><?= $row['price_per_unit']; ?></td>
+                                    <td><?= $row['manufacturer_id']; ?></td>
+                                    <td><?= $row['category_id']; ?></td>
+                                    <td><?= $row['supplier_id']; ?></td>
+                                </tr>
+                                <?php
+                            }
+                        } else{
+                            ?>
+                                <tr>
+                                    <td colspan="8">No record found</td>
+                                </tr>
+                            <?php
+
+                        }
+                    ?>
+                </tbody>
+            </table>
+        </div>
+    </body>
+</html>

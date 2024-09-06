@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Sign up | Track</title>
+        <link rel="icon" href="tracklogo2.jpg">
+        <link rel="stylesheet" href="loginsignup.css">
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@900&display=swap" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css2?family=Poppins&family=Roboto:wght@900&display=swap" rel="stylesheet">
+    </head>
+    <body>
+        <div class="header">
+            <h2>SIGNUP</h2>
+        </div>
+            <form action="signup.php" method="post">
+                <div class="form-element">
+                    <label>Full Name:</label>
+                    <input type="text" id="fullname" name="fullname"><br>
+                </div>
+                <div class="form-element">
+                    <label>Username:</label>
+                    <input type="text" id="username" name="username"><br>
+                </div>
+                <div class="form-element">
+                    <label>Email:</label>
+                    <input type="text" id="email" name="email"><br>
+                </div>
+                <div class="form-element">
+                    <label>Gender</label>
+                    <select id="gender" name="gender">
+                        <option value="male">Male</option>
+                        <option value="female">Female</option>
+                        <option value="pnts">Prefer not to say</option>
+                    </select><br>
+                </div>
+                <div class="form-element">
+                    <label>Password:</label>
+                    <input type="password" id="password" name="password"><br>
+                </div>
+                <div class="other">
+                <input type="checkbox">I have agreed to terms and condition<br>
+                </div>
+                <input type="submit" class="button" name="button" value="Signup"><br>
+              </form>
+    </body>
+</html>
